@@ -17,6 +17,8 @@ app.use('/categories', categories);
 app.use('/locations', locations);
 app.use('/items', items);
 
+app.use(express.static('public'));
+
 mysqlDb.connect().catch(e => console.log(e));
 
 app.listen(port, () => {

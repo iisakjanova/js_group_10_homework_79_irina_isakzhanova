@@ -20,8 +20,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     if (!req.body.name) {
-        res.status(400).send({"error": "Incorrect data"});
-        return;
+        return res.status(400).send({"error": "Incorrect data"});
+
     }
 
     const category = {
@@ -49,8 +49,8 @@ router.delete('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     if (!req.body.name) {
-        res.status(400).send({error: "Incorrect data"});
-        return;
+        return res.status(400).send({error: "Incorrect data"});
+
     }
 
     const category = {

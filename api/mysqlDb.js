@@ -1,10 +1,12 @@
 const mysql = require('mysql2/promise');
 const config = require('./config');
+const dayjs = require('dayjs');
 
 let connection = null;
 
 const categories = 'categories';
 const locations = 'locations';
+const accountingSubjects = 'accounting_subjects';
 
 module.exports = {
     connect: async () => {
@@ -13,6 +15,7 @@ module.exports = {
     },
     getConnection: () => connection,
 
+// Categories
     async getCategories() {
         const [data] = await this.getConnection().query(
             'SELECT ??, ?? FROM ??',
@@ -53,6 +56,7 @@ module.exports = {
         return data;
     },
 
+// Locations
     async getLocations() {
         const [data] = await this.getConnection().query(
             'SELECT ??, ?? FROM ??',
@@ -90,6 +94,58 @@ module.exports = {
             'UPDATE ?? SET ? WHERE id = ?',
             [locations, item, id]
         );
+        return data;
+    },
+
+// Items
+    async getItems() {
+        const [data] = await this.getConnection().query(
+            'SELECT ??, ??, ??, ?? FROM ??',
+            ['id', 'name', 'category_id', 'location_id', accountingSubjects]
+        );
+
+        return data;
+    },
+    async getItemById(id) {
+        const [data] = await this.getConnection().query(
+            `SELECT * FROM ?? WHERE id = ?`,
+            [accountingSubjects, id]
+        );
+
+        return data[0];
+    },
+    async addItem(item) {
+        item.datetime = dayjs().format('YYYY-MM-DDTHH:mm:ss');
+        const data = await this.getConnection().query(
+            `INSERT INTO ?? (category_id, location_id, name, description, registration_date, image) 
+            VALUES (?, ?, ?, ?, ?, ?)`,
+            [
+                accountingSubjects,
+                item.categoryId,
+                item.locationId,
+                item.name,
+                item.description,
+                item.datetime,
+                item.image
+            ]
+        );
+
+        return data[0];
+    },
+    async deleteItem(id) {
+        const [data] = await this.getConnection().query(
+            'DELETE FROM ?? WHERE id = ?',
+            [accountingSubjects, id]
+        );
+
+        return data;
+    },
+    async editItem(item, id) {
+        const [data] = await this.getConnection().query(
+            'UPDATE ?? SET ? WHERE id = ?',
+            [accountingSubjects, item, id]
+        );
+
         return data;
     },
 };
