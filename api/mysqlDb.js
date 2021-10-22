@@ -62,6 +62,7 @@ module.exports = {
             return data;
         } catch (e) {
             console.log(e.message);
+            throw e;
         }
     },
     async editCategory(item, id) {
@@ -123,6 +124,7 @@ module.exports = {
             return data;
         } catch (e) {
             console.log(e.message);
+            throw e;
         }
     },
     async editLocation(item, id) {
@@ -195,6 +197,7 @@ module.exports = {
             return data;
         } catch (e) {
             console.log(e.message);
+            throw e;
         }
     },
     async editItem(item, id) {

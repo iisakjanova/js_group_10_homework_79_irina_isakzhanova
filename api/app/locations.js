@@ -37,7 +37,13 @@ router.post('/', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-    const data = await mysqlDb.deleteLocation(req.params.id);
+    let data;
+
+    try {
+        data = await mysqlDb.deleteLocation(req.params.id);
+    } catch (e) {
+        return res.status(404).send({error: 'Location can not be deleted'});
+    }
 
     if (data.affectedRows === 0) {
         return res.status(404).send({error: 'Location is not found'});

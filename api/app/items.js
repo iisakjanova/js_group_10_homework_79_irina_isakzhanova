@@ -60,7 +60,13 @@ router.post('/', upload.single('image'), async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-    const data = await mysqlDb.deleteItem(req.params.id);
+    let data;
+
+    try {
+        data = await mysqlDb.deleteItem(req.params.id);
+    } catch (e) {
+        return res.status(404).send({error: 'Item can not be deleted'});
+    }
 
     if (data.affectedRows === 0) {
         return res.status(404).send({error: 'Item is not found'});

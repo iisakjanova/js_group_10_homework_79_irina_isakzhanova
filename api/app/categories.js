@@ -21,7 +21,6 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     if (!req.body.name) {
         return res.status(400).send({"error": "Incorrect data"});
-
     }
 
     const category = {
@@ -38,7 +37,13 @@ router.post('/', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-    const data = await mysqlDb.deleteCategory(req.params.id);
+    let data;
+
+    try {
+        data = await mysqlDb.deleteCategory(req.params.id);
+    } catch (e) {
+        return res.status(404).send({error: 'Category can not be deleted'});
+    }
 
     if (data.affectedRows === 0) {
         return res.status(404).send({error: 'Category is not found'});
@@ -50,7 +55,6 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     if (!req.body.name) {
         return res.status(400).send({error: "Incorrect data"});
-
     }
 
     const category = {
