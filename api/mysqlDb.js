@@ -17,135 +17,196 @@ module.exports = {
 
 // Categories
     async getCategories() {
-        const [data] = await this.getConnection().query(
-            'SELECT ??, ?? FROM ??',
-            ['id', 'name', categories]
-        );
+        try {
+            const [data] = await this.getConnection().query(
+                'SELECT ??, ?? FROM ??',
+                ['id', 'name', categories]
+            );
 
-        return data;
+            return data;
+        } catch (e) {
+            console.log(e.message);
+        }
     },
     async getCategoryById(id) {
-        const [data] = await this.getConnection().query(
-            `SELECT * FROM ?? WHERE id = ?`,
-            [categories, id]
-        );
+        try {
+            const [data] = await this.getConnection().query(
+                `SELECT * FROM ?? WHERE id = ?`,
+                [categories, id]
+            );
 
-        return data[0];
+            return data[0];
+        } catch (e) {
+            console.log(e.message);
+        }
     },
     async addCategory(item) {
-        const data = await this.getConnection().query(
-            'INSERT INTO ?? (name, description) VALUES (?, ?)',
-            [categories, item.name, item.description]
-        );
+        try {
+            const data = await this.getConnection().query(
+                'INSERT INTO ?? (name, description) VALUES (?, ?)',
+                [categories, item.name, item.description]
+            );
 
-        return data[0];
+            return data[0];
+        } catch (e) {
+            console.log(e.message);
+        }
     },
     async deleteCategory(id) {
-        const [data] = await this.getConnection().query(
-            'DELETE FROM ?? WHERE id = ?',
-            [categories, id]
-        );
+        try {
+            const [data] = await this.getConnection().query(
+                'DELETE FROM ?? WHERE id = ?',
+                [categories, id]
+            );
 
-        return data;
+            return data;
+        } catch (e) {
+            console.log(e.message);
+        }
     },
     async editCategory(item, id) {
-        const [data] = await this.getConnection().query(
-            'UPDATE ?? SET ? WHERE id = ?',
-            [categories, item, id]
-        );
-        return data;
+        try {
+            const [data] = await this.getConnection().query(
+                'UPDATE ?? SET ? WHERE id = ?',
+                [categories, item, id]
+            );
+            return data;
+        } catch (e) {
+            console.log(e.message);
+        }
     },
 
 // Locations
     async getLocations() {
-        const [data] = await this.getConnection().query(
-            'SELECT ??, ?? FROM ??',
-            ['id', 'name', locations]
-        );
+        try {
+            const [data] = await this.getConnection().query(
+                'SELECT ??, ?? FROM ??',
+                ['id', 'name', locations]
+            );
 
-        return data;
+            return data;
+        } catch (e) {
+            console.log(e.message);
+        }
     },
     async getLocationById(id) {
-        const [data] = await this.getConnection().query(
-            `SELECT * FROM ?? WHERE id = ?`,
-            [locations, id]
-        );
+        try {
+            const [data] = await this.getConnection().query(
+                `SELECT * FROM ?? WHERE id = ?`,
+                [locations, id]
+            );
 
-        return data[0];
+            return data[0];
+        } catch (e) {
+            console.log(e.message);
+        }
     },
     async addLocation(item) {
-        const data = await this.getConnection().query(
-            'INSERT INTO ?? (name, description) VALUES (?, ?)',
-            [locations, item.name, item.description]
-        );
+        try {
+            const data = await this.getConnection().query(
+                'INSERT INTO ?? (name, description) VALUES (?, ?)',
+                [locations, item.name, item.description]
+            );
 
-        return data[0];
+            return data[0];
+        } catch (e) {
+            console.log(e.message);
+        }
     },
     async deleteLocation(id) {
-        const [data] = await this.getConnection().query(
-            'DELETE FROM ?? WHERE id = ?',
-            [locations, id]
-        );
+        try {
+            const [data] = await this.getConnection().query(
+                'DELETE FROM ?? WHERE id = ?',
+                [locations, id]
+            );
 
-        return data;
+            return data;
+        } catch (e) {
+            console.log(e.message);
+        }
     },
     async editLocation(item, id) {
-        const [data] = await this.getConnection().query(
-            'UPDATE ?? SET ? WHERE id = ?',
-            [locations, item, id]
-        );
-        return data;
+        try {
+            const [data] = await this.getConnection().query(
+                'UPDATE ?? SET ? WHERE id = ?',
+                [locations, item, id]
+            );
+            return data;
+        } catch (e) {
+            console.log(e.message);
+        }
     },
 
 // Items
     async getItems() {
-        const [data] = await this.getConnection().query(
-            'SELECT ??, ??, ??, ?? FROM ??',
-            ['id', 'name', 'category_id', 'location_id', accountingSubjects]
-        );
+        try {
+            const [data] = await this.getConnection().query(
+                'SELECT ??, ??, ??, ?? FROM ??',
+                ['id', 'name', 'category_id', 'location_id', accountingSubjects]
+            );
 
-        return data;
+            return data;
+        } catch (e) {
+            console.log(e.message);
+        }
     },
     async getItemById(id) {
-        const [data] = await this.getConnection().query(
-            `SELECT * FROM ?? WHERE id = ?`,
-            [accountingSubjects, id]
-        );
+        try {
+            const [data] = await this.getConnection().query(
+                `SELECT * FROM ?? WHERE id = ?`,
+                [accountingSubjects, id]
+            );
 
-        return data[0];
+            return data[0];
+        } catch (e) {
+            console.log(e.message);
+        }
     },
     async addItem(item) {
         item.datetime = dayjs().format('YYYY-MM-DDTHH:mm:ss');
-        const data = await this.getConnection().query(
-            `INSERT INTO ?? (category_id, location_id, name, description, registration_date, image) 
-            VALUES (?, ?, ?, ?, ?, ?)`,
-            [
-                accountingSubjects,
-                item.categoryId,
-                item.locationId,
-                item.name,
-                item.description,
-                item.datetime,
-                item.image
-            ]
-        );
 
-        return data[0];
+        try {
+            const data = await this.getConnection().query(
+                `INSERT INTO ?? (category_id, location_id, name, description, registration_date, image) 
+                VALUES (?, ?, ?, ?, ?, ?)`,
+                [
+                    accountingSubjects,
+                    item.categoryId,
+                    item.locationId,
+                    item.name,
+                    item.description,
+                    item.datetime,
+                    item.image
+                ]
+            );
+
+            return data[0];
+        } catch (e) {
+            console.log(e.message);
+        }
     },
     async deleteItem(id) {
-        const [data] = await this.getConnection().query(
-            'DELETE FROM ?? WHERE id = ?',
-            [accountingSubjects, id]
-        );
+        try {
+            const [data] = await this.getConnection().query(
+                'DELETE FROM ?? WHERE id = ?',
+                [accountingSubjects, id]
+            );
 
-        return data;
+            return data;
+        } catch (e) {
+            console.log(e.message);
+        }
     },
     async editItem(item, id) {
-        const [data] = await this.getConnection().query(
-            'UPDATE ?? SET ? WHERE id = ?',
-            [accountingSubjects, item, id]
-        );
+        try {
+            const [data] = await this.getConnection().query(
+                'UPDATE ?? SET ? WHERE id = ?',
+                [accountingSubjects, item, id]
+            );
 
-        return data;
+            return data;
+        } catch (e) {
+            console.log(e.message);
+        }
     },
 };
